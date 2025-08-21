@@ -1,4 +1,5 @@
-<!-- <h1> Welcome to the Home Page, {{name}}</h1> -->
+{% extends 'base.html' %}
+{% block content %}
 
 <h1> Welcome to the Home Page, {{name}}</h1>
 <h2> This is all there is to it </h2>
@@ -9,19 +10,36 @@
       <label for="searchMovie" class="form-label">
         Search for Movie:
       </label>
-      <input type="text" class="form-control" name="searchMovie"/>
+      <input type="text" class="form-control" name="searchMovie" />
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
   </form>
 
   <p>Searching for {{searchTerm}}</p>
-  {% for movie in movies %}
-    <h2>{{ movie.title }}</h2>
-    <h3>{{ movie.description }}</h3>
-    <img src="{{ movie.image.url }}">
-    {% if movie.url %}
-      <a href="{{ movie.url }}"> Movie Link </a>
-    {% endif %}
-  {% endfor %}
-  <br>
-</div>
+  <div class="row row-cols1 row-cols-md-3 g4">
+    {% for movie in movies %}
+    <div v-for="movie in movies" class="col">
+      <div class="card">
+        <img src="{{ movie.image.url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text">{{ movie.description }}</p>
+
+          {% if movie.url %}
+          <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
+          {% endif %}
+
+          {% if movie.genre %}
+          <p class="card-text">Genre: {{ movie.genre }}</p>
+          {% endif %}
+
+          {% if movie.year %}
+          <p class="card-text">Year: {{ movie.year }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{% endblock content %}
